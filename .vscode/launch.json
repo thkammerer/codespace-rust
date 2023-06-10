@@ -9,9 +9,9 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=hello_remote_world",
-                    "--package=hello_remote_world",
-                    "--manifest-path=Cargo.toml"
+                    "--bin=learning_rust",
+                    "--package=learning_rust",
+                    "--manifest-path=./learning_rust/Cargo.toml"
                 ],
                 "filter": {
                     "kind": "bin"

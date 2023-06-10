@@ -33,6 +33,6 @@ BraceWrapping:
   BeforeElse  : true
 
 # other stuff
-ColumnLimit: 120
+ColumnLimit: 180
 ---
 # add formating style for other languages here

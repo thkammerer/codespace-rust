@@ -1,8 +1,4 @@
 fn main() {
-    println!(
-        "My first name is {} and my last name is {}",
-        "Thomas", "Kammerer"
-    );
-
-    let x: i32 = 15;
+    let x: f32 = 15.0;
+    println!("The value of variables x = {}", x);
 }
