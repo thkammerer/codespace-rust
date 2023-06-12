@@ -1,5 +1,5 @@
 use core::num;
-use std::vec;
+use std::{io::Stdin, vec};
 
 // -------------------------------------------------------------------------------
 //      Data Types in Rust
@@ -20,6 +20,12 @@ use std::vec;
 //-----------------------------------------------
 
 fn main() {
+    // ***** control structures *****
+    // try_conditionals();
+    // try_match();
+    // try_loop_while();
+    try_for_loop();
+
     // ***** ownership *****
     // try_using_references();
     // try_ownership_and_references();
@@ -34,6 +40,87 @@ fn main() {
     //    try_input_from_std_io()
 }
 
+fn try_for_loop() {
+    let mut some_vec = vec![1, 3, 7, 45, 888];
+    for i in 0..=4 {
+        println!( "{}", some_vec[i] );
+    }
+    for value in some_vec.iter() {
+        println!( "{}", value );
+    }
+
+    for value in some_vec.iter_mut() {
+        *value += 5;
+        println!( "{}", value );
+    }
+
+    println!( "{:?}", some_vec );
+}
+
+fn try_loop_while() {
+    // infinite loop
+    //    loop {
+    //        println!( "in the loop" );
+    //    }
+
+    let my_number = 12;
+    let mut guess = false;
+
+    println!("Guess my number which is betwwen 1 and 20");
+    while !guess {
+        let mut input: String = String::new();
+        std::io::stdin()
+            .read_line(&mut input)
+            .expect("failed to read input");
+
+        let number: u32 = input.trim().parse().expect("invalid input");
+        if number == my_number {
+            println!("You got it! My number was {}", my_number );
+            guess = true;
+        } else {
+            if number < my_number {
+                println!("number to small, try again");
+            }
+            else {
+                println!("number to big, try again");
+            }
+        }
+    }
+}
+
+fn try_match() {
+    let some_romanic_sign = 'x';
+    let mut value = 0;
+    match some_romanic_sign {
+        'I' | 'i' => value = 1,
+        'V' | 'v' => value = 5,
+        'X' | 'x' => value = 10,
+        'L' | 'l' => value = 50,
+        'C' | 'c' => value = 100,
+        'D' | 'd' => value = 500,
+        'M' | 'm' => value = 1000,
+        _ => value = -1,
+    }
+    if value > 0 {
+        println!(
+            "The value of the romanic number {} is {}",
+            some_romanic_sign, value
+        );
+    } else {
+        println!("{} is not a romanic number!", some_romanic_sign);
+    }
+}
+
+fn try_conditionals() {
+    let my_number = 23;
+
+    if my_number > 30 {
+        println!("{} is greater than 30 ", my_number);
+    } else {
+        println!("{} is smaler than or equal to 30 ", my_number);
+    }
+}
+
 fn try_using_references() {
     // references rules
     //     1 one mutable reference in a scope
@@ -45,37 +132,36 @@ fn try_using_references() {
     let mut heap_num = vec![4, 5, 6];
     {
         let ref1 = &mut heap_num;
-    //    let ref2 = &mut heap_num;       // is not in accordance with rule 1: one mutable reference in a scope! 
-    //    println!("ref1: {:?}, ref2: {:?}", ref1, ref2);
+        //    let ref2 = &mut heap_num;       // is not in accordance with rule 1: one mutable reference in a scope!
+        //    println!("ref1: {:?}, ref2: {:?}", ref1, ref2);
     }
     {
         let ref1 = &heap_num;
-        let ref2 = &heap_num;   // in accordance to rule 2: many immutable references in a scope!
+        let ref2 = &heap_num; // in accordance to rule 2: many immutable references in a scope!
         println!("ref1: {:?}, ref2: {:?}", ref1, ref2);
     }
 
     {
         let ref1 = &mut heap_num;
-//        let ref2 = &heap_num;       // is not in accordance with rule 3: mutable and immutable can not coexist
-//        println!("ref1: {:?}, ref2: {:?}", ref1, ref2);
+        //        let ref2 = &heap_num;       // is not in accordance with rule 3: mutable and immutable can not coexist
+        //        println!("ref1: {:?}, ref2: {:?}", ref1, ref2);
     }
 
     {
         let ref1 = &mut heap_num;
-        println!( "ref1: {:?}", ref1 );
-        let ref2 = &heap_num;       // is in accordance with rule 3: mutable and immutable can not coexist, because the scope of ref1 ends after printing.
-        println!( "ref2: {:?}", ref2 );
+        println!("ref1: {:?}", ref1);
+        let ref2 = &heap_num; // is in accordance with rule 3: mutable and immutable can not coexist, because the scope of ref1 ends after printing.
+        println!("ref2: {:?}", ref2);
     }
 
     {
-        heap_num.push( 666 );
+        heap_num.push(666);
         let ref1 = &heap_num;
         let ref2 = &heap_num;
         println!("ref1: {:?}, ref2: {:?}", ref1, ref2);
-        heap_num.push( 777 );
-        // println!("ref1: {:?}, ref2: {:?}", ref1, ref2); this is not in accordance to rule 5: data should not change when immutable references ar in scope        
+        heap_num.push(777);
+        // println!("ref1: {:?}, ref2: {:?}", ref1, ref2); this is not in accordance to rule 5: data should not change when immutable references ar in scope
     }
-
 }
 
 fn stack_function(mut num: i32) {
